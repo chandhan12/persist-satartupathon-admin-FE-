@@ -1,14 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
-const SidebarItem = ( {title, icon,path}) => {
+const SidebarItem = ( {title, icon,path,isActive}) => {
+    
   return (
-    <div className='m-2 bg-gray-300 '>
+    <div className={`m-2 hover:bg-gray-300 rounded-lg ${isActive === "true" ? 'text-blue-500' : ''}`}>
     
     <Link to={path}>
-    <div className='flex justify-center '>
+    <div className={`flex justify-center ${isActive === "true" ? 'text-blue-500' : ''}`}>
     <div className='flex gap-2  justify-center items-center mt-2 mr-5'>
-        <p className='text-lg'>{icon}</p>
+        <div className={`text-lg  ${isActive === "true" ? 'text-blue-500' : ''} `}>{icon}</div>
         <p className='text-lg'>{title}</p>
         </div>
         </div>
