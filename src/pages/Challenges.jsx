@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { plusIcon } from '../icons'
 import axios from 'axios'
+import ChallengesItem from '../components/ChallengesItem'
 
 
 
 
 const Challenges = () => {
 
-  const [challenges,setChallenges]=useState()
+  const [challenges,setChallenges]=useState([])
 
 
   useEffect(()=>{
     const fetchChallenges=async ()=>{
       const result=await axios.get("http://localhost:3000/api/admin/challenges")
-      setChallenges(result.data)
+      setChallenges(result.data.challenges)
     }
 
     fetchChallenges()
@@ -33,7 +34,7 @@ const Challenges = () => {
         <button className='cursor-pointer'>ADD CHALLENGE</button>
       </div>
     </div>
-    <div className='m-2 grid grid-cols-10 items-center  h-14  bg-white'>
+    <div className='m-[1px] grid grid-cols-10 items-center  h-14  bg-white'>
       
        <div className='flex gap-10 col-span-2 p-1 bg-lime-200'>
         <div>Sl No.</div>
@@ -51,7 +52,16 @@ const Challenges = () => {
         <p>Status</p>
        </div> 
     </div>
-    
+    <ChallengesItem slNo={1} title="vibe coder" image="some random" funding="05-03-2025" description="something here" reviewVideo="hey" challengeVideo="hello" status="true"  />
+    {
+      challenges.map((eachItem,index)=>{
+      return(
+        <ChallengesItem key={index} slNo={index+1} title={eachItem.title} image={eachItem.image} deadline={eachItem.deadline} funding={eachItem.funding} description={eachItem.description} reviewVideo={eachItem.reviewVideo} challengeVideo={eachItem.challengeVideo} status={eachItem.status} />
+      )
+
+      })
+    }
+
     </div>
   )
 }
