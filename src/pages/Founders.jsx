@@ -1,7 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { plusIcon } from '../icons'
+import FoundersItem from '../components/FoundersItem'
+import axios from 'axios'
 
 const Founders = () => {
+
+  const [founders,setFounders]=useState([])
+
+  useEffect(()=>{
+    const fetchFounders=async ()=>{
+
+      try {
+        const response=await axios.get("http://localhost:3000/api/admin/founders")
+        setFounders(response.data.founders)
+      } catch (error) {
+        console.log(error.message)
+      }
+
+    }
+    fetchFounders()
+  },[])
+
+
+console.log(founders)
   return (
     
         <div className="min-h-screen bg-gray-50 rounded-md p-8">
@@ -21,16 +42,30 @@ const Founders = () => {
             <thead className="bg-gray-50">
               <tr>
                 <th className="w-12 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">S.No</th>
-                <th className="w-28 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Profile</th>
-                <th className="w-28 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Position</th>
-                <th className="w-64 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
-                <th className="w-28 px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase">Bio & Highlights</th>
+                <th className="w-64 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Profile</th>
+                <th className="w-64 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Position</th>
+                <th className="w-28 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
+                <th className="w-64 px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase">Bio & Highlights</th>
                
                
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              
+              {
+                founders.map((founder,index)=>{
+                  return (
+                    <FoundersItem slNo={index+1} 
+                    name={founder.name}
+                    profilePic={founder.profilePic}
+                    position={founder.position}
+                    location={founder.location}
+                    bio={founder.bio}
+                    highlights={founder.highlights}
+                    />
+                  )
+
+                })
+              }
             </tbody>
           </table>
         </div>

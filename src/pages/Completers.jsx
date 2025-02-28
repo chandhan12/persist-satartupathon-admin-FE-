@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { plusIcon } from '../icons'
+import { crossIcon, plusIcon } from '../icons'
 import axios from 'axios'
 import CompletersItem from '../components/CompletersItem'
 
@@ -111,8 +111,8 @@ console.log(imageFile)
             <div className="flex justify-center flex-col ">
                 <span className=" bg-white rounded opacity-100 p-4">
                    <div className="flex justify-end">
-                    <div onClick={onClose} className="cursor-pointer">
-                    &
+                    <div onClick={onClose} className="cursor-pointer text-red-500">
+                   {crossIcon}
                     </div>
                    </div>  
                    <div>

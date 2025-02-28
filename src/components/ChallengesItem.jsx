@@ -33,7 +33,7 @@ const ChallengesItem = (props) => {
         </div>
       </td>
 
-      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{funding}</td>
+      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">₹ {funding}</td>
       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{deadline}</td>
       <td className="px-3 py-4 text-sm text-gray-500 truncate">{description}</td>
 
