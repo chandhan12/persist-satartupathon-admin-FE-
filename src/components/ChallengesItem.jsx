@@ -1,58 +1,70 @@
-import React, { useState } from 'react'
-import { Play, Video } from 'lucide-react'
+import React, { useState } from "react";
+import { Play, Video } from "lucide-react";
+import axios from "axios";
 
 const ChallengesItem = (props) => {
-    const{slNo,image,title,funding,deadline,description,reviewVideo,challengeVideo,status}=props
-    
-  return (
-    <tr >
-                <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {slNo}
-                </td>
-                <td className="px-3 py-4 whitespace-nowrap">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0 h-15 w-15">
-                      <img className="h-15 w-15 rounded-full" src={image} alt={`${title} logo`} />
-                    </div>
-                    <div className="ml-4">
-                      <div className="text-sm font-medium text-gray-900">{title}</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {funding}
-                </td>
-                <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {deadline}
-                </td>
-                <td className="px-3 py-4 text-sm text-gray-500 truncate">
-                  {description}
-                </td>
-                <td className="px-3 py-4 whitespace-nowrap text-center">
-                  <div className="inline-flex items-center justify-center bg-blue-100 rounded-full h-8 w-8 ">
-                  <a href={reviewVideo} target='_blank'><Play className="h-4 w-4 text-blue-600" /></a>
-                    <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                     1
-                    </span>
-                  </div>
-                </td>
-                <td className="px-3 py-4 whitespace-nowrap text-center">
-                  <div className="inline-flex items-center justify-center bg-blue-100 rounded-full h-8 w-8 ">
-                  
-                    <a href={challengeVideo} target='_blank'><Video className="h-4 w-4 text-blue-600" /> </a>
-                    <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                     1
-                    </span>
-                  </div>
-                </td>
-                <td className="px-3 py-4 whitespace-nowrap text-center">
-                  <button className={`px-2  cursor-pointer text-center w-auto inline-flex text-xs leading-5 font-semibold rounded-2xl text-white  ${status == true ? ' bg-green-800':'bg-red-800' } `}>
-                    {status==true ? 'Visible' :'Not visible'}
-                  </button>
-                 
-                </td>
-              </tr>
-  )
-}
+  const { slNo, image, title, funding, deadline, description, reviewVideo, challengeVideo, status, id } = props;
+  const [visibility, setVisibility] = useState(status);
 
-export default ChallengesItem
+  const handleVisibility = async () => {
+    try {
+      const updatedStatus = !visibility; // Toggle status before sending
+      await axios.put(`http://localhost:3000/api/admin/update/${id}`, {
+        status: updatedStatus,
+      });
+      setVisibility(updatedStatus); // Update state after successful API call
+    } catch (error) {
+      console.error("Error updating visibility:", error.message);
+    }
+  };
+
+  return (
+    <tr>
+      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{slNo}</td>
+
+      <td className="px-3 py-4 whitespace-nowrap">
+        <div className="flex items-center">
+          <div className="flex-shrink-0 h-10 w-10">
+            <img className="h-10 w-10 rounded-full" src={image} alt={`${title} logo`} />
+          </div>
+          <div className="ml-4">
+            <div className="text-sm font-medium text-gray-900">{title}</div>
+          </div>
+        </div>
+      </td>
+
+      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{funding}</td>
+      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{deadline}</td>
+      <td className="px-3 py-4 text-sm text-gray-500 truncate">{description}</td>
+
+      <td className="px-3 py-4 whitespace-nowrap text-center">
+        <div className="inline-flex items-center justify-center bg-blue-100 rounded-full h-8 w-8">
+          <a href={reviewVideo} target="_blank" rel="noopener noreferrer">
+            <Play className="h-4 w-4 text-blue-600" />
+          </a>
+        </div>
+      </td>
+
+      <td className="px-3 py-4 whitespace-nowrap text-center">
+        <div className="inline-flex items-center justify-center bg-blue-100 rounded-full h-8 w-8">
+          <a href={challengeVideo} target="_blank" rel="noopener noreferrer">
+            <Video className="h-4 w-4 text-blue-600" />
+          </a>
+        </div>
+      </td>
+
+      <td className="px-3 py-4 whitespace-nowrap text-center">
+        <button
+          onClick={handleVisibility}
+          className={`px-3 py-1 cursor-pointer text-center w-auto inline-flex text-xs leading-5 font-semibold rounded-2xl text-white ${
+            visibility ? "bg-green-800" : "bg-red-800"
+          }`}
+        >
+          {visibility ? "Visible" : "Not Visible"}
+        </button>
+      </td>
+    </tr>
+  );
+};
+
+export default ChallengesItem;

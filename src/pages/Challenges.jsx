@@ -27,14 +27,38 @@ const Challenges = () => {
       }
     };
     fetchChallenge();
-  }, []);
+  }, [open]);
 
   const openPopUp = () => setOpen(true);
   const closePopUp = () => setOpen(false);
 
   const today = new Date().toISOString().split("T")[0]
- console.log(imageRef.current.value)
+//  console.log(imageRef.current.value)
 
+
+ const handleCreateChallenge=async ()=>{
+  const title=titleRef.current.value
+  const image=imageRef.current.value
+  const deadline=deadlineRef.current.value
+  const funding=fundingRef.current.value
+  const description=descriptionRef.current.value
+  const reviewVideo=reviewVideoRef.current.value
+  const challengeVideo=challengeVideoRef.current.value
+  const status=statusRef.current.value
+
+const response=await axios.post("http://localhost:3000/api/admin/challenges",{
+  title,
+  image,
+  deadline,
+  funding,
+  description,
+  reviewVideo,
+  challengeVideo,
+  status
+})
+setOpen(false)
+console.log(response)
+ }
   return (
     <>
      
@@ -43,7 +67,7 @@ const Challenges = () => {
           <div className="bg-white p-6 rounded-lg shadow-lg backdrop-opacity-100">
             <h2 className="text-xl font-semibold mb-4">Add New Challenge</h2>
             <Input type="text" placeholder="title" reference={titleRef} />
-            <input type="file" ref={imageRef} />
+            <input type="file" ref={imageRef}  className='bg-red-200'/>
             <textarea  ref={descriptionRef} placeholder='desc' >
 
             </textarea>
@@ -58,7 +82,7 @@ const Challenges = () => {
             <Input type="text" placeholder="hello" reference={challengeVideoRef} />
             <input type="text" ref={statusRef} />
 
-
+              <button onClick={handleCreateChallenge}>Create Challenge</button>
            
             <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg" onClick={closePopUp}>
               Close
@@ -107,6 +131,7 @@ const Challenges = () => {
                   reviewVideo={ch.reviewVideo}
                   challengeVideo={ch.challengeVideo}
                   status={ch.status}
+                  id={ch._id}
                 />
               ))}
             </tbody>
