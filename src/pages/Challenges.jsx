@@ -1,11 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { plusIcon } from '../icons';
 import axios from 'axios';
 import ChallengesItem from '../components/ChallengesItem';
+import Input from '../components/Input';
 
 const Challenges = () => {
   const [challenge, setChallenge] = useState([]);
   const [open, setOpen] = useState(false);
+  const titleRef=useRef("")
+  const imageRef=useRef("")
+  const deadlineRef=useRef("")
+  const fundingRef=useRef(" ")
+  const descriptionRef=useRef(" ")
+  const reviewVideoRef=useRef(" ")
+  const challengeVideoRef=useRef(" ")
+  const statusRef=useRef(true)
+
 
   useEffect(() => {
     const fetchChallenge = async () => {
@@ -22,6 +32,9 @@ const Challenges = () => {
   const openPopUp = () => setOpen(true);
   const closePopUp = () => setOpen(false);
 
+  const today = new Date().toISOString().split("T")[0]
+ console.log(imageRef.current.value)
+
   return (
     <>
      
@@ -29,6 +42,23 @@ const Challenges = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-slate-200 opacity-80">
           <div className="bg-white p-6 rounded-lg shadow-lg backdrop-opacity-100">
             <h2 className="text-xl font-semibold mb-4">Add New Challenge</h2>
+            <Input type="text" placeholder="title" reference={titleRef} />
+            <input type="file" ref={imageRef} />
+            <textarea  ref={descriptionRef} placeholder='desc' >
+
+            </textarea>
+            <input
+              type="date"
+              ref={deadlineRef}
+              min={today} 
+              className="border p-2 rounded w-full mb-2"
+            />
+            <input type="number" ref={fundingRef} placeholder='funding'/>
+            <Input type="text" placeholder="hello" reference={reviewVideoRef} />
+            <Input type="text" placeholder="hello" reference={challengeVideoRef} />
+            <input type="text" ref={statusRef} />
+
+
            
             <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg" onClick={closePopUp}>
               Close
@@ -38,7 +68,7 @@ const Challenges = () => {
       )}
 
  
-      <div className="min-h-screen bg-gray-50 p-8">
+      <div className="min-h-screen bg-gray-50 rounded-md p-8">
         <div className="flex justify-between m-2">
           <h1 className="text-lg font-semibold">Challenges Management</h1>
           <div
