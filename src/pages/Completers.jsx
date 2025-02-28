@@ -1,7 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { plusIcon } from '../icons'
+import axios from 'axios'
+import CompletersItem from '../components/CompletersItem'
+
 
 const Completers = () => {
+
+  const [completers,setCompleters]=useState([])
+
+
+  useEffect(()=>{
+    const fetchCompleters=async ()=>{
+      try {
+        const response=await axios("http://localhost:3000/api/admin/completers")
+        setCompleters(response.data.completers)
+      } catch (error) {
+        console.log(error.message)
+        
+      }
+    }
+    fetchCompleters()
+  },[])
+
+  console.log(completers)
   return (
    
     <div className="min-h-screen bg-gray-50 rounded-md p-8">
@@ -31,7 +52,24 @@ const Completers = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          
+
+          {
+            completers.map((completer,index)=>{
+              return(
+                <CompletersItem
+                slNo={index+1}
+                image={completer.image} 
+                project={completer.project}
+                profile={completer.profile}
+                position={completer.position}
+                description={completer.description}
+                funding={completer.funding}
+                profilePicture={completer.profilePicture}
+                 />
+              )
+            })
+          }
+         
         </tbody>
       </table>
     </div>

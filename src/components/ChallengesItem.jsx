@@ -8,11 +8,11 @@ const ChallengesItem = (props) => {
 
   const handleVisibility = async () => {
     try {
-      const updatedStatus = !visibility; // Toggle status before sending
+      const updatedStatus = !visibility; 
       await axios.put(`http://localhost:3000/api/admin/update/${id}`, {
         status: updatedStatus,
       });
-      setVisibility(updatedStatus); // Update state after successful API call
+      setVisibility(updatedStatus); 
     } catch (error) {
       console.error("Error updating visibility:", error.message);
     }
