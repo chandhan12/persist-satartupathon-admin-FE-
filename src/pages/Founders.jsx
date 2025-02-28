@@ -150,6 +150,7 @@ console.log(founders)
                 founders.map((founder,index)=>{
                   return (
                     <FoundersItem slNo={index+1} 
+                    key={founder._id}
                     name={founder.name}
                     profilePic={founder.profilePic}
                     position={founder.position}

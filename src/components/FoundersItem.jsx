@@ -1,35 +1,25 @@
-import React from 'react'
+import React from "react";
 
-const FoundersItem = (props) => {
-    const {slNo,name,profilePic,position,location,bio,highlights}=props
+const FoundersItem = ({ slNo, name, profilePic, position, location, bio, highlights }) => {
   return (
-    <tr className='h-25'>
-    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{slNo}</td>
+    <tr className="h-25">
+      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{slNo}</td>
 
-    <td className="px-3  whitespace-nowrap">
-      <div className="flex items-center">
-        <div className="flex-shrink-0 h-10 w-10">
-          <img className="h-10 w-10 rounded-full" src={profilePic} alt={`${name} logo`} />
+      <td className="px-3 whitespace-nowrap">
+        <div className="flex items-center">
+          <img className="h-10 w-10 rounded-full" src={profilePic} alt={`${name} profile`} />
+          <div className="ml-2 flex flex-col gap-1">
+            <span className="text-sm font-medium text-gray-900">{name}</span>
+            <span className="text-sm text-wrap text-gray-600">{position}</span>
+          </div>
         </div>
-        <div className="ml-2 flex flex-col gap-1">
-          <div className="text-sm font-medium text-gray-900">{name}</div>
-          <div className="text-sm text-wrap mb-1 text-gray-600">{position}</div>
-        </div>
-      </div>
-    </td>
+      </td>
 
-    <td className="px-3 py-4  text-sm text-gray-800 text-wrap ">{position}</td>
-    <td className="px-3 py-4  text-sm text-gray-500">{location}</td>
-    
-    <div className='flex flex-col '>
-    <td className="px-1 py-1 text-sm text-gray-800 ">{bio}</td>
-    <td className="px-1 py-1  text-sm text-gray-500 truncate"> {highlights}</td>
-    </div>
-    
+      <td className="px-3 py-4 text-sm text-gray-500">{location}</td>
+      <td className="px-3 py-4 text-sm text-gray-800">{bio}</td>
+      <td className="px-3 py-4 text-sm text-gray-500 max-w-xs truncate">{highlights}</td>
+    </tr>
+  );
+};
 
-   
-  </tr>
-  )
-}
-
-export default FoundersItem
+export default FoundersItem;

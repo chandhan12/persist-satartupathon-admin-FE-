@@ -121,8 +121,9 @@ console.log(response)
             <tbody className="bg-white divide-y divide-gray-200">
               {challenge.map((ch, index) => (
                 <ChallengesItem
-                  key={ch.id} 
+                  key={ch._id} 
                   slNo={index + 1}
+                  
                   image={ch.image}
                   title={ch.title}
                   funding={ch.funding}

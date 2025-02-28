@@ -169,6 +169,8 @@ console.log(imageFile)
               return(
                 <CompletersItem
                 slNo={index+1}
+                key={completer._id}
+                id={completer._id}
                 image={completer.image} 
                 project={completer.project}
                 profile={completer.profile}
