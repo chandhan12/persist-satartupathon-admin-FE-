@@ -3,7 +3,7 @@ import React from 'react'
 const FoundersItem = (props) => {
     const {slNo,name,profilePic,position,location,bio,highlights}=props
   return (
-    <tr>
+    <tr className='h-25'>
     <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{slNo}</td>
 
     <td className="px-3  whitespace-nowrap">
@@ -11,7 +11,7 @@ const FoundersItem = (props) => {
         <div className="flex-shrink-0 h-10 w-10">
           <img className="h-10 w-10 rounded-full" src={profilePic} alt={`${name} logo`} />
         </div>
-        <div className="ml-2 flex flex-col gap-2">
+        <div className="ml-2 flex flex-col gap-1">
           <div className="text-sm font-medium text-gray-900">{name}</div>
           <div className="text-sm text-wrap mb-1 text-gray-600">{position}</div>
         </div>

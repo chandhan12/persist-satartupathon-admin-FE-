@@ -8,7 +8,7 @@ const Layout = () => {
     <div className="w-64 min-w-[16rem] h-full fixed left-0 top-0">
       <Sidebar />
     </div>
-    <div className="ml-68 w-full  p-4 bg-blue-200 ">
+    <div className="ml-68 w-full  p-4  ">
       <Outlet />
     </div>
   </div>
