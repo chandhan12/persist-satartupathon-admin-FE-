@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { plusIcon } from '../icons'
 import axios from 'axios'
 import CompletersItem from '../components/CompletersItem'
@@ -7,6 +7,15 @@ import CompletersItem from '../components/CompletersItem'
 const Completers = () => {
 
   const [completers,setCompleters]=useState([])
+  const[open,setOpen]=useState(false)
+  const projectRef=useRef(" ")
+  const profileRef=useRef(" ")
+  const positionRef=useRef(" ")
+  const descriptionRef=useRef(" ")
+  const fundingRef=useRef(" ")
+  const [imageFile,setImageFile]=useState(" ")
+  const [profilePicFile,setProfilePicFile]=useState(" ")
+  
 
 
   useEffect(()=>{
@@ -20,11 +29,113 @@ const Completers = () => {
       }
     }
     fetchCompleters()
-  },[])
+  },[open])
 
+  const onClose=()=>{
+    setOpen(false)
+  }
+
+  const handleImageFile=(e)=>{
+    const file=e.target.files[0]
+
+    var reader=new FileReader()
+    reader.onloadend=function (){
+      setImageFile(reader.result)
+      
+    }
+    reader.readAsDataURL(file)
+
+
+  }
+console.log(imageFile)
+
+  const handlePicFile=(e)=>{
+    const file=e.target.files[0]
+
+    var reader=new FileReader()
+    reader.onloadend=function (){
+      setProfilePicFile(reader.result)
+      
+    }
+    reader.readAsDataURL(file)
+
+  }
+  console.log(profilePicFile)
   console.log(completers)
+
+  const handleSubmit=async ()=>{
+    const project=projectRef.current.value
+    const profile=profileRef.current.value
+    const position=positionRef.current.value
+    const description=descriptionRef.current.value
+    const funding=fundingRef.current.value
+
+    try {
+      const result=await axios.post("http://localhost:3000/upload",{
+        imageUrl:imageFile
+      })
+
+      const res=await axios.post("http://localhost:3000/upload",{
+        imageUrl:profilePicFile
+      })
+        const imageUrl=result.data.url
+        const profilePicUrl=res.data.url
+        const response=await axios.post("http://localhost:3000/api/admin/completers",{
+          project,
+          profile,
+          position,
+          description,
+          funding,
+          image:imageUrl,
+          profilePicture:profilePicUrl
+          
+        })
+        setOpen(false)
+    } catch (error) {
+      console.log(error.message)
+      
+    }
+
+  }
   return (
-   
+   <>
+
+{ open && <div>
+          <div className="w-screen h-screen bg-slate-500 
+        opacity-60 fixed left-0 top-0 justify-center flex">
+
+          </div>
+        
+        <div className="w-screen h-screen  
+         fixed left-0 top-0 justify-center flex ">
+            <div className="flex justify-center flex-col ">
+                <span className=" bg-white rounded opacity-100 p-4">
+                   <div className="flex justify-end">
+                    <div onClick={onClose} className="cursor-pointer">
+                    &
+                    </div>
+                   </div>  
+                   <div>
+                    <input type="text" ref={projectRef}  placeholder='Project Name' />
+                    <p>Project image</p>
+                    <input type="file" onChange={handleImageFile}/>
+                   <div className='flex flex-col gap-5 p-2'>
+                   <input type="text" ref={positionRef} placeholder='Position' />
+                   <input type="text" ref={profileRef} placeholder='profile' />
+                    <textarea  ref={descriptionRef} placeholder='description' ></textarea>
+                    <input type="number" ref={fundingRef} placeholder='funding' />
+                   </div>
+                    <p>profilr pic</p>
+                    <input type="file" onChange={handlePicFile}/>
+                    
+                </div>
+                <button onClick={handleSubmit} className='bg-green-500 rounded-lg cursor-pointer p-1 text-white'>CREATE COMPLETERS</button>
+                </span>
+               
+            </div>
+            </div>
+            </div>
+            }
     <div className="min-h-screen bg-gray-50 rounded-md p-8">
     <div className="flex justify-between m-2">
       <h1 className="text-lg font-semibold">Completers </h1>
@@ -33,7 +144,7 @@ const Completers = () => {
         
       >
         <span>{plusIcon}</span>
-        <button className="cursor-pointer">ADD COMPLETER</button>
+        <button className="cursor-pointer" onClick={()=>setOpen(true)}>ADD COMPLETER</button>
       </div>
     </div>
 
@@ -74,6 +185,7 @@ const Completers = () => {
       </table>
     </div>
   </div>
+  </>
   )
 }
 
