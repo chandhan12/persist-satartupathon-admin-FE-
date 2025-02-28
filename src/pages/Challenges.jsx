@@ -10,7 +10,7 @@ const Challenges = () => {
   const titleRef=useRef("")
   const imageRef=useRef("")
   const deadlineRef=useRef("")
-  const fundingRef=useRef(" ")
+  const fundingRef=useRef(" ") 
   const descriptionRef=useRef(" ")
   const reviewVideoRef=useRef(" ")
   const challengeVideoRef=useRef(" ")
