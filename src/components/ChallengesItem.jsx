@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Play, Video } from "lucide-react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ChallengesItem = (props) => {
-  const { slNo, image, title, funding, deadline, description, reviewVideo, challengeVideo, status, id } = props;
+  const { slNo, image, title, funding, deadline, description, reviewVideo, challengeVideo, status, id, } = props;
   const [visibility, setVisibility] = useState(status);
+ 
 
   const handleVisibility = async () => {
     try {
@@ -18,9 +20,17 @@ const ChallengesItem = (props) => {
     }
   };
 
+  const handleDelete=async ()=>{
+
+    await axios.delete(`http://localhost:3000/api/admin/delete/challenge/${id}`)
+   
+    console.log("deleted")
+
+  }
+
   return (
     <tr>
-      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{slNo}</td>
+      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-700">{slNo}</td>
 
       <td className="px-3 py-4 whitespace-nowrap">
         <div className="flex items-center">
@@ -33,9 +43,9 @@ const ChallengesItem = (props) => {
         </div>
       </td>
 
-      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">₹ {funding}</td>
-      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{deadline}</td>
-      <td className="px-3 py-4 text-sm text-gray-500 truncate">{description}</td>
+      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-700">₹ {funding}</td>
+      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-700">{deadline}</td>
+      <td className="px-3 py-4 text-sm text-gray-700 truncate">{description}</td>
 
       <td className="px-3 py-4 whitespace-nowrap text-center">
         <div className="inline-flex items-center justify-center bg-blue-100 rounded-full h-8 w-8">
@@ -62,6 +72,11 @@ const ChallengesItem = (props) => {
         >
           {visibility ? "Visible" : "Not Visible"}
         </button>
+      </td>
+      <td className="px-3 py-4 whitespace-nowrap text-center">
+       
+          <button onClick={handleDelete} className="text-red-500 cursor-pointer">Delete</button>
+        
       </td>
     </tr>
   );

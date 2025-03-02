@@ -93,27 +93,66 @@ console.log(founders)
             <div className="w-screen h-screen  
              fixed left-0 top-0 justify-center flex ">
                 <div className="flex justify-center flex-col ">
-                    <span className=" bg-white rounded opacity-100 p-4">
-                       <div className="flex justify-end">
-                        <div onClick={onClose} className="cursor-pointer text-red-500">
-                       {crossIcon}
-                        </div>
-                       </div>  
-                       <div>
-                        <input type="text" ref={nameRef}  placeholder='Name' />
-                        
-                       <div className='flex flex-col gap-5 p-2'>
-                       <input type="text" ref={positionRef} placeholder='Position' />
-                       <input type="text" ref={locationRef} placeholder='Location' />
-                       <input type="text" ref={bioRef} placeholder='Bio' />
-                        <textarea  placeholder='Highlights' ref={highlightsRef} ></textarea>
-                       </div>
-                        <p>profilr pic : </p>
-                        <input type="file" className='bg-amber-300' onChange={handlePicFile}/>
-                        
-                    </div>
-                    <button onClick={handleSubmit} className='bg-green-500 rounded-lg cursor-pointer p-1 text-white'>ADD FOUNDER</button>
-                    </span>
+                <span className="bg-white rounded-lg shadow-lg opacity-100 p-6 w-[400px]">
+  {/* Close Button */}
+  <div className="flex justify-end">
+    <div onClick={onClose} className="cursor-pointer text-red-500 hover:text-red-700 transition">
+      {crossIcon}
+    </div>
+  </div>
+
+  {/* Form Inputs */}
+  <div className="space-y-4">
+    <input
+      type="text"
+      ref={nameRef}
+      placeholder="Name"
+      className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+    />
+
+    <div className="flex flex-col gap-3">
+      <input
+        type="text"
+        ref={positionRef}
+        placeholder="Position"
+        className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <input
+        type="text"
+        ref={locationRef}
+        placeholder="Location"
+        className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <input
+        type="text"
+        ref={bioRef}
+        placeholder="Bio"
+        className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <textarea
+        placeholder="Highlights"
+        ref={highlightsRef}
+        className="border border-gray-300 p-2 rounded h-20 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+    </div>
+
+    <p className="font-medium text-gray-600">Profile Pic:</p>
+    <input
+      type="file"
+      className="w-full border p-2 rounded bg-amber-200 cursor-pointer"
+      onChange={handlePicFile}
+    />
+  </div>
+
+  {/* Submit Button */}
+  <button
+    onClick={handleSubmit}
+    className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg transition"
+  >
+    ADD FOUNDER
+  </button>
+</span>
+
                    
                 </div>
                 </div>
@@ -141,6 +180,7 @@ console.log(founders)
                 <th className="w-64 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Position</th>
                 <th className="w-28 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
                 <th className="w-64 px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase">Bio & Highlights</th>
+                <th className="w-24 px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase">Delete</th>
                
                
               </tr>
@@ -151,6 +191,7 @@ console.log(founders)
                   return (
                     <FoundersItem slNo={index+1} 
                     key={founder._id}
+                    id={founder._id}
                     name={founder.name}
                     profilePic={founder.profilePic}
                     position={founder.position}

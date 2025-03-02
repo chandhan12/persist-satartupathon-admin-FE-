@@ -60,8 +60,7 @@ console.log(imageFile)
     reader.readAsDataURL(file)
 
   }
-  console.log(profilePicFile)
-  console.log(completers)
+  
 
   const handleSubmit=async ()=>{
     const project=projectRef.current.value
@@ -109,28 +108,72 @@ console.log(imageFile)
         <div className="w-screen h-screen  
          fixed left-0 top-0 justify-center flex ">
             <div className="flex justify-center flex-col ">
-                <span className=" bg-white rounded opacity-100 p-4">
-                   <div className="flex justify-end">
-                    <div onClick={onClose} className="cursor-pointer text-red-500">
-                   {crossIcon}
-                    </div>
-                   </div>  
-                   <div>
-                    <input type="text" ref={projectRef}  placeholder='Project Name' />
-                    <p>Project image</p>
-                    <input type="file" onChange={handleImageFile}/>
-                   <div className='flex flex-col gap-5 p-2'>
-                   <input type="text" ref={positionRef} placeholder='Position' />
-                   <input type="text" ref={profileRef} placeholder='profile' />
-                    <textarea  ref={descriptionRef} placeholder='description' ></textarea>
-                    <input type="number" ref={fundingRef} placeholder='funding' />
-                   </div>
-                    <p>profilr pic</p>
-                    <input type="file" onChange={handlePicFile}/>
-                    
-                </div>
-                <button onClick={handleSubmit} className='bg-green-500 rounded-lg cursor-pointer p-1 text-white'>CREATE COMPLETERS</button>
-                </span>
+            <span className="bg-white rounded-lg shadow-lg opacity-100 p-6 w-[400px]">
+  
+  <div className="flex justify-end">
+    <div onClick={onClose} className="cursor-pointer text-red-500 hover:text-red-700 transition">
+      {crossIcon}
+    </div>
+  </div>
+
+  <div className="space-y-4">
+    <input
+      type="text"
+      ref={projectRef}
+      placeholder="Project Name"
+      className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+    />
+
+    <p className="font-medium text-gray-600">Project Image</p>
+    <input
+      type="file"
+      onChange={handleImageFile}
+      className="w-full border p-2 rounded bg-gray-100 cursor-pointer"
+    />
+
+    <div className="flex flex-col gap-3">
+      <input
+        type="text"
+        ref={positionRef}
+        placeholder="Position"
+        className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <input
+        type="text"
+        ref={profileRef}
+        placeholder="Profile"
+        className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <textarea
+        ref={descriptionRef}
+        placeholder="Description"
+        className="border border-gray-300 p-2 rounded h-20 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <input
+        type="number"
+        ref={fundingRef}
+        placeholder="Funding"
+        className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+    </div>
+
+    <p className="font-medium text-gray-600">Profile Pic</p>
+    <input
+      type="file"
+      onChange={handlePicFile}
+      className="w-full border p-2 rounded bg-gray-100 cursor-pointer"
+    />
+  </div>
+
+ 
+  <button
+    onClick={handleSubmit}
+    className="mt-4 w-full bg-slate-500 hover:bg-slate-600 text-white font-semibold py-2 rounded-lg transition"
+  >
+    CREATE COMPLETERS
+  </button>
+</span>
+
                
             </div>
             </div>
@@ -159,6 +202,7 @@ console.log(imageFile)
             <th className="w-64 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
             <th className="w-28 px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase">Funding</th>
             <th className="w-28 px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase">Profile Picture</th>
+            <th className="w-28 px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase">Delete</th>
            
           </tr>
         </thead>

@@ -15,6 +15,8 @@ const Challenges = () => {
   const reviewVideoRef=useRef(" ")
   const challengeVideoRef=useRef(" ")
   const statusRef=useRef(true)
+   const [imageFile,setImageFile]=useState(" ")
+   
 
 
   useEffect(() => {
@@ -33,7 +35,7 @@ const Challenges = () => {
   const closePopUp = () => setOpen(false);
 
   const today = new Date().toISOString().split("T")[0]
-//  console.log(imageRef.current.value)
+
 
 
  const handleCreateChallenge=async ()=>{
@@ -46,9 +48,16 @@ const Challenges = () => {
   const challengeVideo=challengeVideoRef.current.value
   const status=statusRef.current.value
 
+
+  const result=await axios.post("http://localhost:3000/upload",{
+    imageUrl:imageFile
+  })
+
+  const imageUrl=result.data.url
+  
 const response=await axios.post("http://localhost:3000/api/admin/challenges",{
   title,
-  image,
+  image:imageFile,
   deadline,
   funding,
   description,
@@ -59,36 +68,56 @@ const response=await axios.post("http://localhost:3000/api/admin/challenges",{
 setOpen(false)
 console.log(response)
  }
+
+ const handleImageFile=(e)=>{
+  const file=e.target.files[0]
+
+  var reader=new FileReader()
+  reader.onloadend=function (){
+    setImageFile(reader.result)
+    
+  }
+  reader.readAsDataURL(file)
+
+
+}
+console.log(imageFile)
   return (
     <>
      
       {open && (
-        <div className="fixed inset-0 flex items-center justify-center bg-slate-200 opacity-80">
-          <div className="bg-white p-6 rounded-lg shadow-lg backdrop-opacity-100">
-            <h2 className="text-xl font-semibold mb-4">Add New Challenge</h2>
-            <Input type="text" placeholder="title" reference={titleRef} />
-            <input type="file" ref={imageRef}  className='bg-red-200'/>
-            <textarea  ref={descriptionRef} placeholder='desc' >
-
-            </textarea>
-            <input
-              type="date"
-              ref={deadlineRef}
-              min={today} 
-              className="border p-2 rounded w-full mb-2"
-            />
-            <input type="number" ref={fundingRef} placeholder='funding'/>
-            <Input type="text" placeholder="hello" reference={reviewVideoRef} />
-            <Input type="text" placeholder="hello" reference={challengeVideoRef} />
-            <input type="text" ref={statusRef} />
-
-              <button onClick={handleCreateChallenge}>Create Challenge</button>
-           
-            <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg" onClick={closePopUp}>
+        <div className="fixed inset-0 flex items-center justify-center bg-slate-300 ">
+        <div className="bg-white p-6 rounded-lg shadow-2xl w-96">
+          <h2 className="text-2xl font-semibold mb-4 text-center text-gray-700">Add New Challenge</h2>
+      
+          <div className="space-y-3">
+            <Input type="text" placeholder="Title" reference={titleRef} className="border rounded-lg p-2 w-full" />
+            
+            <input type="file" ref={imageRef} onChange={handleImageFile} className="w-full border rounded-lg p-2 bg-gray-100" />
+      
+            <textarea ref={descriptionRef} placeholder="Description" className="w-full h-24 p-2 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"></textarea>
+      
+            <input type="date" ref={deadlineRef} min={today} className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-400 focus:outline-none" />
+      
+            <input type="number" ref={fundingRef} placeholder="Funding" className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-400 focus:outline-none" />
+      
+            <Input type="text" placeholder="Review Video URL" reference={reviewVideoRef} className="border rounded-lg p-2 w-full" />
+            
+            <Input type="text" placeholder="Challenge Video URL" reference={challengeVideoRef} className="border rounded-lg p-2 w-full" />
+      
+            <input type="text" ref={statusRef} placeholder="Status" className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-400 focus:outline-none" />
+          </div>
+      
+          <div className="flex justify-between mt-6">
+            <button onClick={handleCreateChallenge} className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">Create Challenge</button>
+      
+            <button className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all" onClick={closePopUp}>
               Close
             </button>
           </div>
         </div>
+      </div>
+      
       )}
 
  
@@ -108,14 +137,15 @@ console.log(response)
           <table className="w-full table-fixed divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="w-12 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">S.No</th>
-                <th className="w-48 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Title</th>
-                <th className="w-28 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Funding</th>
-                <th className="w-28 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Deadline</th>
-                <th className="w-64 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
-                <th className="w-28 px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase">Review Videos</th>
-                <th className="w-28 px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase">Challenge Videos</th>
-                <th className="w-24 px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status</th>
+                <th className="w-12 px-3 py-3 text-left text-xs font-medium text-gray-800 uppercase">S.No</th>
+                <th className="w-48 px-3 py-3 text-left text-xs font-medium text-gray-800 uppercase">Title</th>
+                <th className="w-28 px-3 py-3 text-left text-xs font-medium text-gray-800 uppercase">Funding</th>
+                <th className="w-28 px-3 py-3 text-left text-xs font-medium text-gray-800 uppercase">Deadline</th>
+                <th className="w-64 px-3 py-3 text-left text-xs font-medium text-gray-800 uppercase">Description</th>
+                <th className="w-28 px-3 py-3 text-center text-xs font-medium text-gray-800 uppercase">Review Videos</th>
+                <th className="w-28 px-3 py-3 text-center text-xs font-medium text-gray-800 uppercase">Challenge Videos</th>
+                <th className="w-24 px-3 py-3 text-center text-xs font-medium text-gray-800 uppercase">Status</th>
+                <th className="w-24 px-3 py-3 text-center text-xs font-medium text-gray-800 uppercase">Delete</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -133,6 +163,7 @@ console.log(response)
                   challengeVideo={ch.challengeVideo}
                   status={ch.status}
                   id={ch._id}
+                 
                 />
               ))}
             </tbody>

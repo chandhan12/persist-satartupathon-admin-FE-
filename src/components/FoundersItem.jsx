@@ -1,6 +1,16 @@
+import axios from "axios";
 import React from "react";
 
-const FoundersItem = ({ slNo, name, profilePic, position, location, bio, highlights }) => {
+const FoundersItem = ({ slNo, name, profilePic, position, location, bio, highlights,id }) => {
+
+
+  const handleDelete=async ()=>{
+
+    await axios.delete(`http://localhost:3000/api/admin/delete/founder/${id}`)
+   
+    console.log("deleted")
+
+  }
   return (
     <tr className="h-25">
       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{slNo}</td>
@@ -15,9 +25,14 @@ const FoundersItem = ({ slNo, name, profilePic, position, location, bio, highlig
         </div>
       </td>
 
-      <td className="px-3 py-4 text-sm text-gray-500">{location}</td>
-      <td className="px-3 py-4 text-sm text-gray-800">{bio}</td>
-      <td className="px-3 py-4 text-sm text-gray-500 max-w-xs truncate">{highlights}</td>
+      <td className="px-3 py-4 text-sm text-gray-500">{position}</td>
+      <td className="px-3 py-4 text-sm text-gray-800">{location}</td>
+      <td className="px-3 py-4 text-sm text-gray-500 max-w-xs truncate">{bio},{highlights}</td>
+      <td className="px-3 py-4 whitespace-nowrap text-center">
+       
+          <button onClick={handleDelete} className="text-red-500 cursor-pointer">Delete</button>
+        
+      </td>
     </tr>
   );
 };

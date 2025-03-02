@@ -1,7 +1,18 @@
+import axios from 'axios'
 import React from 'react'
 
 const CompletersItem = (props) => {
-    const{_id,slNo,project,profile,position,image,description,funding,profilePicture}=props
+    const{_id,slNo,project,profile,position,image,description,funding,profilePicture,id}=props
+
+   
+      const handleDelete=async ()=>{
+
+        await axios.delete(`http://localhost:3000/api/admin/delete/completer/${id}`)
+       
+        console.log("deleted")
+    
+      }
+    
   return (
     <tr>
     <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{slNo}</td>
@@ -27,6 +38,11 @@ const CompletersItem = (props) => {
           <img className="h-10 w-10 rounded-full" src={profilePicture} alt={`${profile} pic`} />
         </div>
     </td>
+    <td className="px-3 py-4 whitespace-nowrap text-center">
+       
+          <button onClick={handleDelete} className="text-red-500 cursor-pointer">Delete</button>
+        
+      </td>
 
    
   </tr>
