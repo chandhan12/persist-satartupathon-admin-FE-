@@ -5,10 +5,14 @@ const FoundersItem = ({ slNo, name, profilePic, position, location, bio, highlig
 
 
   const handleDelete=async ()=>{
-
-    await axios.delete(`http://localhost:3000/api/admin/delete/founder/${id}`)
+try {
+  
+  await axios.delete(`http://localhost:3000/api/admin/delete/founder/${id}`)
    
-    console.log("deleted")
+
+} catch (error) {
+  console.log(error.message)
+}
 
   }
   return (

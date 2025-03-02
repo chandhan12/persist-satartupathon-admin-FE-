@@ -66,7 +66,7 @@ const response=await axios.post("http://localhost:3000/api/admin/challenges",{
   status
 })
 setOpen(false)
-console.log(response)
+
  }
 
  const handleImageFile=(e)=>{

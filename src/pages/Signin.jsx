@@ -12,9 +12,7 @@ const Signin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-  console.log(emailRef.current.value)
-  console.log(passwordRef.current.value)
-
+ 
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
@@ -24,7 +22,7 @@ const Signin = () => {
       setMessage(response.data.msg);
       localStorage.setItem("token", response.data.token);
       
-      navigate("/dashboard"); 
+      
 
     } catch (error) {
       setMessage(error.response?.data?.error || "Signin failed");

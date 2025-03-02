@@ -47,7 +47,7 @@ const Completers = () => {
 
 
   }
-console.log(imageFile)
+
 
   const handlePicFile=(e)=>{
     const file=e.target.files[0]

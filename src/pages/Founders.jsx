@@ -41,7 +41,7 @@ const Founders = () => {
 
 
   }
-  console.log(profilePicFile)
+  
 
   const handleSubmit=async ()=>{
     const name=nameRef.current.value
@@ -56,7 +56,7 @@ const Founders = () => {
         imageUrl:profilePicFile
       })
 
-      console.log(res.data.url)
+      
       const profilePicUrl=res.data.url
 
       const response =await axios.post("http://localhost:3000/api/admin/founders",{
@@ -71,7 +71,7 @@ const Founders = () => {
       setOpen(false)
     } catch (error) {
       
-      console.log(ErrorEvent.message)
+      console.log(error.message)
     }
 
   }
@@ -80,7 +80,7 @@ const Founders = () => {
   }
 
 
-console.log(founders)
+
   return (
 
     <>
