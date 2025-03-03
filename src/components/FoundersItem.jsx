@@ -10,7 +10,7 @@ const FoundersItem = (props) => {
   const handleDelete=async ()=>{
 try {
   
-  await axios.delete(`http://localhost:3000/api/admin/delete/founder/${id}`,
+  await axios.delete(`https://persiststartupathon-admin.onrender.com/api/admin/delete/founder/${id}`,
     { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
          
   } }

@@ -11,7 +11,7 @@ const Subscriptions = () => {
     const fetchSubscribers=async ()=>{
       try {
         setLoading(true)
-        const response=await axios.get("http://localhost:3000/api/admin/subscribers",
+        const response=await axios.get("https://persiststartupathon-admin.onrender.com/api/admin/subscribers",
           { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
          
     } }

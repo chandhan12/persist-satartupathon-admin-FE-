@@ -22,7 +22,7 @@ const Founders = () => {
 
       try {
         setLoading(true)
-        const response=await axios.get("http://localhost:3000/api/admin/founders",
+        const response=await axios.get("https://persiststartupathon-admin.onrender.com/api/admin/founders",
           { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
          
   } }
@@ -62,14 +62,14 @@ const Founders = () => {
 
     try {
       setLoading(true)
-      const res=await axios.post("http://localhost:3000/upload",{
+      const res=await axios.post("https://persiststartupathon-admin.onrender.com/upload",{
         imageUrl:profilePicFile
       })
 
       
       const profilePicUrl=res.data.url
 
-      const response =await axios.post("http://localhost:3000/api/admin/founders",{
+      const response =await axios.post("https://persiststartupathon-admin.onrender.com/api/admin/founders",{
         name,
         position,
         location,

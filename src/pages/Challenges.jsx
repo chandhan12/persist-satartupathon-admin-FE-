@@ -25,7 +25,7 @@ const Challenges = () => {
     const fetchChallenge = async () => {
       try {
         setLoading(true)
-        const res = await axios.get("http://localhost:3000/api/admin/challenges",
+        const res = await axios.get("https://persiststartupathon-admin.onrender.com/api/admin/challenges",
           { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
          
          } }
@@ -61,12 +61,12 @@ const Challenges = () => {
     try {
       // Upload image to server
       setLoading(true)
-      const imageUploadResponse = await axios.post("http://localhost:3000/upload", { imageUrl: imageFile });
+      const imageUploadResponse = await axios.post("https://persiststartupathon-admin.onrender.com/upload", { imageUrl: imageFile });
       const imageUrl = imageUploadResponse.data.url;
 
       // Create challenge
       await axios.post(
-        "http://localhost:3000/api/admin/challenges",
+        "https://persiststartupathon-admin.onrender.com/api/admin/challenges",
         { title, image: imageUrl, deadline, funding, description, reviewVideo, challengeVideo, status:true },
         { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
          

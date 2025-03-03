@@ -25,7 +25,7 @@ const Completers = () => {
     const fetchCompleters=async ()=>{
       try {
         setLoading(true)
-        const response=await axios("http://localhost:3000/api/admin/completers",
+        const response=await axios("https://persiststartupathon-admin.onrender.com/api/admin/completers",
           { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
          
         } }
@@ -83,16 +83,16 @@ const Completers = () => {
 
     try {
       setLoading(true)
-      const result=await axios.post("http://localhost:3000/upload",{
+      const result=await axios.post("https://persiststartupathon-admin.onrender.com/upload",{
         imageUrl:imageFile
       })
 
-      const res=await axios.post("http://localhost:3000/upload",{
+      const res=await axios.post("https://persiststartupathon-admin.onrender.com/upload",{
         imageUrl:profilePicFile
       })
         const imageUrl=result.data.url
         const profilePicUrl=res.data.url
-        const response=await axios.post("http://localhost:3000/api/admin/completers",{
+        const response=await axios.post("https://persiststartupathon-admin.onrender.com/api/admin/completers",{
           project,
           profile,
           position,

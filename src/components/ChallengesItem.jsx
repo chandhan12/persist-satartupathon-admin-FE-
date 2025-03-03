@@ -16,7 +16,7 @@ const ChallengesItem = (props) => {
     try {
       const updatedStatus = !visibility; 
       console.log(id)
-      await axios.put(`http://localhost:3000/api/admin/update/${id}`, {
+      await axios.put(`https://persiststartupathon-admin.onrender.com/api/admin/update/${id}`, {
         status: updatedStatus,
       },
       { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
@@ -35,7 +35,7 @@ const ChallengesItem = (props) => {
   const handleDelete=async ()=>{
 try {
   
-  await axios.delete(`http://localhost:3000/api/admin/delete/challenge/${id}`,
+  await axios.delete(`https://persiststartupathon-admin.onrender.com/api/admin/delete/challenge/${id}`,
     { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
          
   } }

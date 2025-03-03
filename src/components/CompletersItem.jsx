@@ -10,7 +10,7 @@ const CompletersItem = (props) => {
       const handleDelete=async ()=>{
 try {
   
-  await axios.delete(`http://localhost:3000/api/admin/delete/completer/${id}`,
+  await axios.delete(`https://persiststartupathon-admin.onrender.com/api/admin/delete/completer/${id}`,
     { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
          
   } }
