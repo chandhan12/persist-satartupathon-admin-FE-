@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 const Signin = () => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
+  const [loading,setLoading]=useState(false)
 
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
@@ -17,17 +18,19 @@ const Signin = () => {
     const password = passwordRef.current.value;
 
     try {
+      setLoading(true)
       const response = await axios.post("https://persiststartupathon-admin.onrender.com/api/admin/signin", { email, password });
 
       setMessage(response.data.msg);
     
       localStorage.setItem("token", response.data.token);
+      setLoading(false)
       navigate("/dashboard")
       
       
 
     } catch (error) {
-      setMessage(error.response?.data?.error || "Signin failed");
+      setMessage(error.response?.data?.error || "Signin failed/invalid credentials");
     }
   };
 
@@ -55,6 +58,10 @@ const Signin = () => {
         <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
           Sign In
         </button>
+
+        {
+          loading && <p className="text-xl text-slate-800 font-semibold text-center">Loading....</p>
+        }
 
         {message && <p className="text-center text-red-500 mt-2">{message}</p>}
 
