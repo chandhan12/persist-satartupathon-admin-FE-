@@ -15,7 +15,7 @@ const ChallengesItem = (props) => {
   const handleVisibility = async () => {
     try {
       const updatedStatus = !visibility; 
-      console.log(id)
+     
       await axios.put(`https://persiststartupathon-admin.onrender.com/api/admin/update/${id}`, {
         status: updatedStatus,
       },
@@ -29,9 +29,7 @@ const ChallengesItem = (props) => {
     }
   };
 
-  // const handleVisibility=async()=>{
-  //   console.log(id)
-  // }
+
   const handleDelete=async ()=>{
 try {
   

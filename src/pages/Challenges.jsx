@@ -88,7 +88,7 @@ const Challenges = () => {
       reader.readAsDataURL(file);
     }
   };
-console.log(localStorage.getItem("token"))
+
   return (
     <>
       {open && (
