@@ -1,15 +1,21 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useContext } from 'react'
+import { DeleteContext } from '../Context/DeleteContext'
 
 const CompletersItem = (props) => {
+      const {deleted,setDeleted}=useContext(DeleteContext)
     const{_id,slNo,project,profile,position,image,description,funding,profilePicture,id}=props
 
    
       const handleDelete=async ()=>{
 try {
   
-  await axios.delete(`http://localhost:3000/api/admin/delete/completer/${id}`)
-       
+  await axios.delete(`http://localhost:3000/api/admin/delete/completer/${id}`,
+    { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
+         
+  } }
+  )
+    setDeleted(!deleted)   
       
 } catch (error) {
   console.log(error.message)

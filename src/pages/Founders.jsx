@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { crossIcon, plusIcon } from '../icons'
 import FoundersItem from '../components/FoundersItem'
 import axios from 'axios'
+import { DeleteContext } from '../Context/DeleteContext'
 
 const Founders = () => {
 
@@ -13,20 +14,28 @@ const Founders = () => {
   const highlightsRef=useRef(" ")
   const bioRef=useRef(" ")
   const [profilePicFile,setProfilePicFile]=useState(" ")
+  const [loading,setLoading]=useState(false)
+   const {deleted,setDeleted}=useContext(DeleteContext)
 
   useEffect(()=>{
     const fetchFounders=async ()=>{
 
       try {
-        const response=await axios.get("http://localhost:3000/api/admin/founders")
+        setLoading(true)
+        const response=await axios.get("http://localhost:3000/api/admin/founders",
+          { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
+         
+  } }
+        )
         setFounders(response.data.founders)
+        setLoading(false)
       } catch (error) {
         console.log(error.message)
       }
 
     }
     fetchFounders()
-  },[open])
+  },[open,deleted])
 
 
   const handlePicFile=(e)=>{
@@ -52,6 +61,7 @@ const Founders = () => {
 
 
     try {
+      setLoading(true)
       const res=await axios.post("http://localhost:3000/upload",{
         imageUrl:profilePicFile
       })
@@ -67,7 +77,11 @@ const Founders = () => {
         highlights,
         profilePic:profilePicUrl
 
-      })
+      },
+      { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
+         
+    } })
+    setLoading(false)
       setOpen(false)
     } catch (error) {
       
@@ -94,14 +108,14 @@ const Founders = () => {
              fixed left-0 top-0 justify-center flex ">
                 <div className="flex justify-center flex-col ">
                 <span className="bg-white rounded-lg shadow-lg opacity-100 p-6 w-[400px]">
-  {/* Close Button */}
+ 
   <div className="flex justify-end">
     <div onClick={onClose} className="cursor-pointer text-red-500 hover:text-red-700 transition">
       {crossIcon}
     </div>
   </div>
 
-  {/* Form Inputs */}
+  
   <div className="space-y-4">
     <input
       type="text"
@@ -144,13 +158,16 @@ const Founders = () => {
     />
   </div>
 
-  {/* Submit Button */}
+ 
   <button
     onClick={handleSubmit}
     className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg transition"
   >
     ADD FOUNDER
   </button>
+  {
+    loading && <p className='text-center text-xl m-4 text-slate-800 font-semibold'>Loading ...</p>
+  }
 </span>
 
                    
@@ -206,6 +223,9 @@ const Founders = () => {
             </tbody>
           </table>
         </div>
+        {
+          loading && <p className='text-center text-xl m-4 text-slate-800 font-semibold'>Loading ...</p>
+        }
       </div>
       </>
   )

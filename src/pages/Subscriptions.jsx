@@ -4,14 +4,21 @@ import axios from 'axios'
 
 const Subscriptions = () => {
   const [subscribers,setSubscribers]=useState([])
+  const [loading,setLoading]=useState(false)
 
 
   useEffect(()=>{
     const fetchSubscribers=async ()=>{
       try {
-        const response=await axios.get("http://localhost:3000/api/admin/subscribers")
+        setLoading(true)
+        const response=await axios.get("http://localhost:3000/api/admin/subscribers",
+          { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
+         
+    } }
+        )
         
         setSubscribers(response.data.subscribers)
+        setLoading(false)
       } catch (error) {
         console.log(error.message)
         
@@ -50,6 +57,9 @@ const Subscriptions = () => {
         </tbody>
       </table>
     </div>
+    {
+      loading && <p className='text-center text-xl m-4 text-slate-800 font-semibold'>Loading ...</p>
+    }
   </div>
   )
 }

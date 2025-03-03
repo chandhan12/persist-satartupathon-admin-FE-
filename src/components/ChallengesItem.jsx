@@ -1,32 +1,47 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Play, Video } from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { DeleteContext } from "../Context/DeleteContext";
+
+
 
 const ChallengesItem = (props) => {
   const { slNo, image, title, funding, deadline, description, reviewVideo, challengeVideo, status, id, } = props;
   const [visibility, setVisibility] = useState(status);
+  const {deleted,setDeleted}=useContext(DeleteContext)
  
 
   const handleVisibility = async () => {
     try {
       const updatedStatus = !visibility; 
+      console.log(id)
       await axios.put(`http://localhost:3000/api/admin/update/${id}`, {
         status: updatedStatus,
-      });
+      },
+      { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
+         
+    } }
+    );
       setVisibility(updatedStatus); 
     } catch (error) {
       console.error("Error updating visibility:", error.message);
     }
   };
 
+  // const handleVisibility=async()=>{
+  //   console.log(id)
+  // }
   const handleDelete=async ()=>{
 try {
   
-  await axios.delete(`http://localhost:3000/api/admin/delete/challenge/${id}`)
+  await axios.delete(`http://localhost:3000/api/admin/delete/challenge/${id}`,
+    { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
+         
+  } }
+  )
    
-   
-
+  setDeleted(!deleted)
 } catch (error) {
   console.log(error.message)
 }

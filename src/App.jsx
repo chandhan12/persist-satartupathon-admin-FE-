@@ -5,19 +5,21 @@ import Completers from './pages/Completers'
 import Founders from './pages/Founders'
 import Subscriptions from './pages/Subscriptions'
 import Layout from './components/Layout'
-import Signup from './pages/Signup'
+
 import Signin from './pages/Signin'
+import { DeleteContextProvider } from './Context/DeleteContext'
+
 
 function App() {
   
 
   return (
   
-   
+    <DeleteContextProvider>
      <BrowserRouter>
      <Routes>
-     <Route path='/' element={<Signup />} />
-     <Route path='/signin' element={<Signin />} />
+    
+     <Route path='/' element={<Signin />} />
       <Route path='/' element={<Layout />} >
      
       <Route path='/dashboard' element={<Challenges/>} />
@@ -27,6 +29,7 @@ function App() {
       </Route>
      </Routes>
      </BrowserRouter>
+     </DeleteContextProvider>
     
   )
 }

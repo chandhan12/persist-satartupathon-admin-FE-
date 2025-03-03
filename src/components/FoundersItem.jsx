@@ -1,14 +1,21 @@
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
+import { DeleteContext } from "../Context/DeleteContext";
 
-const FoundersItem = ({ slNo, name, profilePic, position, location, bio, highlights,id }) => {
+const FoundersItem = (props) => {
+  const {deleted,setDeleted}=useContext(DeleteContext)
+  const { slNo, name, profilePic, position, location, bio, highlights,id }=props
 
 
   const handleDelete=async ()=>{
 try {
   
-  await axios.delete(`http://localhost:3000/api/admin/delete/founder/${id}`)
-   
+  await axios.delete(`http://localhost:3000/api/admin/delete/founder/${id}`,
+    { headers: { "authorization": `barer ${localStorage.getItem("token")}`,
+         
+  } }
+  )
+  setDeleted(!deleted)
 
 } catch (error) {
   console.log(error.message)

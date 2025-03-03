@@ -20,7 +20,9 @@ const Signin = () => {
       const response = await axios.post("http://localhost:3000/api/admin/signin", { email, password });
 
       setMessage(response.data.msg);
+    
       localStorage.setItem("token", response.data.token);
+      navigate("/dashboard")
       
       
 
@@ -55,10 +57,6 @@ const Signin = () => {
         </button>
 
         {message && <p className="text-center text-red-500 mt-2">{message}</p>}
-
-        <p className="text-center mt-4 text-gray-600">
-          Don't have an account? <Link to="/" className="text-blue-500 hover:underline">Sign up</Link>
-        </p>
 
       </form>
     </div>
